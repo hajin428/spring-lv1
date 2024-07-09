@@ -13,4 +13,6 @@ public interface BoardService {
     Long updateBoard(Long id, BoardRequestDto requestDto);
     Long deleteBoard(Long id, String password);
     BoardResponseDto findById(Long id);
+
+    BoardResponseDto getPostById(Long id);
 }
