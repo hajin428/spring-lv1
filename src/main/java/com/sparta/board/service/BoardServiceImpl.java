@@ -1,9 +1,11 @@
+
 package com.sparta.board.service;
 
 import com.sparta.board.dto.BoardRequestDto;
 import com.sparta.board.dto.BoardResponseDto;
 import com.sparta.board.entity.Board;
 import com.sparta.board.repository.BoardRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,13 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Transactional
+@RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
     private final BoardRepository boardRepository;
-
-    public BoardServiceImpl(BoardRepository boardRepository) {
-        this.boardRepository = boardRepository;
-    }
 
     // 게시글 작성
     @Override
@@ -35,7 +33,7 @@ public class BoardServiceImpl implements BoardService {
 
     // 게시판 전체 조회
     @Override
-    public List<BoardResponseDto> findAll() {
+    public List<BoardResponseDto> getBoards() {
         List<Board> boards = boardRepository.findAllByOrderByCreateDateDesc();
         List<BoardResponseDto> responseDtos = new ArrayList<>();
         for (Board board : boards) {
@@ -46,7 +44,7 @@ public class BoardServiceImpl implements BoardService {
 
     // 게시글 선택 조회
     @Override
-    public BoardResponseDto findById(Long id) {
+    public BoardResponseDto getBoardById(Long id) {
         Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
         return convertToResponseDto(board);
     }
@@ -55,7 +53,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public Long updateBoard(Long id, BoardRequestDto requestDto) {
-        Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Error"));
+        Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
         if (!board.getPassword().equals(requestDto.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
@@ -70,7 +68,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public Long deleteBoard(Long id, String password) {
-        Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Error"));
+        Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
         if (!board.getPassword().equals(password)) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
