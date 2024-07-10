@@ -19,7 +19,7 @@ public class BoardServiceImpl implements BoardService {
         this.boardRepository = boardRepository;
     }
 
-    //게시글 작성
+    // 게시글 작성
     @Override
     @Transactional
     public BoardResponseDto createBoard(BoardRequestDto requestDto) {
@@ -33,7 +33,7 @@ public class BoardServiceImpl implements BoardService {
         return convertToResponseDto(board);
     }
 
-    //게시판 전체 조회
+    // 게시판 전체 조회
     @Override
     public List<BoardResponseDto> findAll() {
         List<Board> boards = boardRepository.findAllByOrderByCreateDateDesc();
@@ -44,18 +44,18 @@ public class BoardServiceImpl implements BoardService {
         return responseDtos;
     }
 
-    //게시글 선택 조회
+    // 게시글 선택 조회
     @Override
     public BoardResponseDto findById(Long id) {
-        Board board = (Board) boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
+        Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
         return convertToResponseDto(board);
     }
 
-    //게시글 수정
+    // 게시글 수정
     @Override
     @Transactional
     public Long updateBoard(Long id, BoardRequestDto requestDto) {
-        Board board = (Board) boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("찾을 수 없습니다."));
+        Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("찾을 수 없습니다."));
         if (!board.getPassword().equals(requestDto.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
@@ -66,11 +66,11 @@ public class BoardServiceImpl implements BoardService {
         return board.getId();
     }
 
-    //게시글 삭제
+    // 게시글 삭제
     @Override
     @Transactional
     public Long deleteBoard(Long id, String password) {
-        Board board = (Board) boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
+        Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
         if (!board.getPassword().equals(password)) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
