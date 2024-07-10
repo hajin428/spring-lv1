@@ -31,8 +31,8 @@ public class BoardController {
 
     //게시글 선택 조회
     @GetMapping("/{id}")
-    public BoardResponseDto getPostById(@PathVariable Long id) {
-        return boardService.getPostById(id);
+    public BoardResponseDto getBoardById(@PathVariable Long id) {
+        return boardService.getBoardById(id);
     }
 
     //게시글 수정
