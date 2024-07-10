@@ -55,7 +55,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public Long updateBoard(Long id, BoardRequestDto requestDto) {
-        Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("찾을 수 없습니다."));
+        Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Error"));
         if (!board.getPassword().equals(requestDto.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
@@ -70,7 +70,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public Long deleteBoard(Long id, String password) {
-        Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
+        Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Error"));
         if (!board.getPassword().equals(password)) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
