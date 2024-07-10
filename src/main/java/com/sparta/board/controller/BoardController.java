@@ -26,7 +26,7 @@ public class BoardController {
     //게시글 전체 조회
     @GetMapping
     public List<BoardResponseDto> findAll() {
-        return boardService.findAll();
+        return boardService.getBoards();
     }
 
     //게시글 선택 조회
