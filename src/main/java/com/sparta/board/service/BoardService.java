@@ -28,11 +28,11 @@ public class BoardService {
     // 게시판 전체 조회
     public List<BoardResponseDto> getBoards() {
         List<Board> boards = boardRepository.findAllByOrderByCreateDateDesc();
-        List<BoardResponseDto> responseDtos = new ArrayList<>();
+        List<BoardResponseDto> responseDto = new ArrayList<>();
         for (Board board : boards) {
-            responseDtos.add(convertToResponseDto(board));
+            responseDto.add(convertToResponseDto(board));
         }
-        return responseDtos;
+        return responseDto;
     }
 
     // 게시글 선택 조회
